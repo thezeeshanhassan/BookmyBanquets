@@ -82,7 +82,7 @@ router.post('/login', validateData(userSchemaLogin), async (req, res) => {
 });
 
 router.post('/forget-password', validateData(userSchemaForgetPassword), async (req, res) => {
-    const data = req.body();
+    const data = req.body;
     const { email } = data;
     const user = await prisma.user.findUnique({
         where: {
@@ -100,9 +100,8 @@ router.post('/forget-password', validateData(userSchemaForgetPassword), async (r
 
 })
 
-router.get('/verify-email', async (req, res) => {
+router.put('/verify-email', async (req, res) => {
     const { token } = req.query;
-    console.log("Request for email verification")
     if (!token) {
         return res.status(400).json({ error: 'Invalid token' });
     }
@@ -194,7 +193,12 @@ const sendVerificationEmailForgetPassword = async (email, token) => {
         html: `<p>Please click the following link to reset your password:</p><p><a href="${verificationLink}">${verificationLink}</a></p>`,
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+        await transporter.sendMail(mailOptions);
+    }
+    catch (err) {
+        console.log(err);
+    }
 
 }
 const generateVerificationToken = (email) => {
