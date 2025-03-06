@@ -12,4 +12,7 @@ const userSchemaLogin = zod.object({
     password: zod.string().min(6).max(255)
 });
 
-module.exports = { userSchemaRegister, userSchemaLogin };
+const userSchemaForgetPassword = zod.object({
+    email: zod.string().email().required()
+})
+module.exports = { userSchemaRegister, userSchemaLogin, userSchemaForgetPassword };

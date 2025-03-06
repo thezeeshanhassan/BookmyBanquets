@@ -5,7 +5,7 @@ const validateData = require('../middlewares/validateInput');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { userSchemaRegister, userSchemaLogin } = require('../schemas/userSchema');
+const { userSchemaRegister, userSchemaLogin, userSchemaForgetPassword } = require('../schemas/userSchema');
 
 
 const prisma = new PrismaClient();
@@ -49,11 +49,6 @@ router.post('/register', validateData(userSchemaRegister), async (req, res) => {
         }
     })
 
-    //Need to send a email to user for verification and account activation link
-    //Generate token and send it to user email
-
-
-
 
     res.status(201).json({ message: 'Registration successful. Please check your email to verify your account.' });
 
@@ -83,6 +78,26 @@ router.post('/login', validateData(userSchemaLogin), async (req, res) => {
     const token = jwt.sign({ email }, process.env.JWT_SECRET);
     res.status(200).json({ token });
 });
+
+router.post('/forget-password', validateData(userSchemaForgetPassword), async (req, res) => {
+    const data = req.body();
+    const { email } = data;
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    });
+    if (!user) {
+        return res.status(400).json({ error: 'User not found' });
+    }
+
+    const token = generateVerificationToken(email);
+    await sendVerificationEmailForgetPassword(email, token);
+    
+
+
+
+})
 
 router.get('/verify-email', async (req, res) => {
     const { token } = req.query;
@@ -132,6 +147,19 @@ const sendVerificationEmail = async (email, token) => {
 
 };
 
+const sendVerificationEmailForgetPassword = async (email, token) => {
+    const verificationLink = `http://localhost:3000/api/v1/user/verify-email?token=${token}`;
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Reset Password',
+        html: `<p>Please click the following link to reset your password:</p><p><a href="${verificationLink}">${verificationLink}</a></p>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+}
 const generateVerificationToken = (email) => {
     return jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '24h' });
 };
