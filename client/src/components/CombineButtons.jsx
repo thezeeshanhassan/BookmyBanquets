@@ -1,3 +1,4 @@
+import { delay } from 'framer-motion';
 import { useLocation, Link } from 'react-router-dom';
 
 
@@ -25,3 +26,4 @@ const CombinedButtons = () => {
 };
 
 export default CombinedButtons;
+
