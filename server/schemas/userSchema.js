@@ -13,6 +13,11 @@ const userSchemaLogin = zod.object({
 });
 
 const userSchemaForgetPassword = zod.object({
-    email: zod.string().email().required()
+    email: zod.string().email()
 })
-module.exports = { userSchemaRegister, userSchemaLogin, userSchemaForgetPassword };
+
+const userSchemaResetPassword = zod.object({
+    password: zod.string().min(6).max(255),
+    confirmPassword: zod.string().min(6).max(255)
+})
+module.exports = { userSchemaRegister, userSchemaLogin, userSchemaForgetPassword, userSchemaResetPassword };

@@ -5,7 +5,7 @@ const validateData = require('../middlewares/validateInput');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { userSchemaRegister, userSchemaLogin, userSchemaForgetPassword } = require('../schemas/userSchema');
+const { userSchemaRegister, userSchemaLogin, userSchemaForgetPassword, userSchemaResetPassword } = require('../schemas/userSchema');
 
 
 const prisma = new PrismaClient();
@@ -63,8 +63,11 @@ router.post('/login', validateData(userSchemaLogin), async (req, res) => {
         }
     });
     if (!user) {
-        return res.status(400).json({ error: 'Invalid credentials' });
+        return res.status(400).json({ error: 'User not found' });
     }
+
+
+
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
@@ -74,7 +77,6 @@ router.post('/login', validateData(userSchemaLogin), async (req, res) => {
     if (!user.isActive) {
         return res.status(400).json({ error: 'Please verify your email to login' });
     }
-
     const token = jwt.sign({ email }, process.env.JWT_SECRET);
     res.status(200).json({ token });
 });
@@ -93,9 +95,8 @@ router.post('/forget-password', validateData(userSchemaForgetPassword), async (r
 
     const token = generateVerificationToken(email);
     await sendVerificationEmailForgetPassword(email, token);
-    
 
-
+    return res.status(200).json({ message: 'Please check your email to reset your password' });
 
 })
 
@@ -131,6 +132,42 @@ router.get('/verify-email', async (req, res) => {
     }
 });
 
+router.post('/reset-password/:token', validateData(userSchemaResetPassword), async (req, res) => {
+    const { token } = req.params;
+    const { password, confirmPassowrd } = req.body;
+    if (!token) {
+        return res.status(400).json({ error: 'Invalid token' });
+    }
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = decoded;
+
+        // Find the user by email
+        const user = await prisma.user.findUnique({
+            where: { email },
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid token' });
+        }
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Update the user's password
+        await prisma.user.update({
+            where: { email },
+            data: { password: hashedPassword },
+        });
+
+        res.status(200).json({ message: 'Password reset successful' });
+    } catch (error) {
+        res.status(400).json({ error: 'Invalid or expired token' });
+    }
+}
+
+);
 
 
 const sendVerificationEmail = async (email, token) => {
@@ -148,7 +185,7 @@ const sendVerificationEmail = async (email, token) => {
 };
 
 const sendVerificationEmailForgetPassword = async (email, token) => {
-    const verificationLink = `http://localhost:3000/api/v1/user/verify-email?token=${token}`;
+    const verificationLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
