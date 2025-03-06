@@ -100,7 +100,7 @@ router.post('/forget-password', validateData(userSchemaForgetPassword), async (r
 
 })
 
-router.put('/verify-email', async (req, res) => {
+router.get('/verify-email', async (req, res) => {
     const { token } = req.query;
     if (!token) {
         return res.status(400).json({ error: 'Invalid token' });
@@ -179,7 +179,12 @@ const sendVerificationEmail = async (email, token) => {
         html: `<p>Please click the following link to verify your email address:</p><p><a href="${verificationLink}">${verificationLink}</a></p>`,
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+        await transporter.sendMail(mailOptions);
+    }
+    catch (err) {
+        console.log(err);
+    }
 
 };
 
