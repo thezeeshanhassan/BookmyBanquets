@@ -9,6 +9,7 @@ import "./App.css";
 import HomeLayout from "./layout/homeLayout";
 import Home from "./pages/Venues";
 import HomeNew from "./pages/HomeNew";
+import HallProfile from "./pages/HallProfile";
 
 const Router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const Router = createBrowserRouter([
         element: <Home />,
       },
     ],
+  },
+  {
+    path: "/hall",
+    element: <HallProfile />,
   },
 ]);
 

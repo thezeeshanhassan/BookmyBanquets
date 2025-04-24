@@ -16,7 +16,7 @@ const Register = () => {
     email: "",
     name: "",
     password: "",
-    userType: "customer",
+    role: "customer",
   });
 
   // Access the AlertContext
@@ -28,7 +28,7 @@ const Register = () => {
     if (type === "radio") {
       setFormData((prev) => ({
         ...prev,
-        userType: value,
+        role: value,
       }));
     } else {
       setFormData((prev) => ({
@@ -110,14 +110,14 @@ const Register = () => {
               <CheckboxComponent
                 name="role"
                 value="customer"
-                checked={formData.userType === "customer"}
+                checked={formData.role === "customer"}
                 onChange={handleChange}
                 label="Customer"
               />
               <CheckboxComponent
                 name="role"
-                value="hall manager"
-                checked={formData.userType === "hall manager"}
+                value="manager"
+                checked={formData.role === "manager"}
                 onChange={handleChange}
                 label="Hall Manager"
               />
