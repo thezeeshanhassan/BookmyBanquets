@@ -59,7 +59,7 @@ const Header = ({ isScrolled }) => {
             <span>Favorites</span>
           </a>
           <a
-            href="#login"
+            href="/login"
             className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${
               isScrolled ? "text-navy-800" : "text-white"
             }`}
@@ -68,7 +68,7 @@ const Header = ({ isScrolled }) => {
             <span>Login</span>
           </a>
           <a
-            href="#signup"
+            href="/register"
             className={`btn-primary ${
               isScrolled
                 ? ""
@@ -154,7 +154,7 @@ const Header = ({ isScrolled }) => {
                   href="/signup"
                   className="btn-primary w-full justify-center flex items-center"
                 >
-                  Sign Up
+                  Sign Upp
                 </a>
               </div>
             </nav>

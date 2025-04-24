@@ -45,7 +45,9 @@ router.post('/register', validateData(userSchemaRegister), async (req, res) => {
                 name,
                 email,
                 password: hashedPassword,
-                role
+                role,
+                isActive: false,
+
             }
         })
 
@@ -81,7 +83,7 @@ router.post('/login', validateData(userSchemaLogin), async (req, res) => {
         return res.status(400).json({ error: 'Please verify your email to login' });
     }
     const token = jwt.sign({ email }, process.env.JWT_SECRET);
-    res.status(200).json({ token });
+    res.status(200).json({ user, token });
 });
 
 router.post('/forget-password', validateData(userSchemaForgetPassword), async (req, res) => {
