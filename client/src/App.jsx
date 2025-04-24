@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import HomeLayout from "./layout/homeLayout";
-import Home from "./pages/Home";
-import Venue from "./pages/Vanue";
+import Home from "./pages/Venues";
+import HomeNew from "./pages/HomeNew";
 
 const Router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const Router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <HomeNew />,
       },
 
       {
@@ -28,11 +28,11 @@ const Router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      {
+        path: "/venues",
+        element: <Home />,
+      },
     ],
-  },
-  {
-    path: "/venue",
-    element: <Venue />,
   },
 ]);
 

@@ -70,7 +70,7 @@ const Hero = () => {
                 selected={eventDate}
                 onChange={(date) => setEventDate(date)}
                 placeholderText="When?"
-                className="w-full pl-10 pr-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gold-500"
+                className="w-full pl-10 pr-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                 wrapperClassName="w-full"
                 calendarClassName="bg-white text-navy-800"
                 minDate={new Date()}
