@@ -42,13 +42,13 @@ const CallToAction = () => {
             className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
           >
             <a
-              href="#venues"
+              href="/venues"
               className="btn-primary bg-gold-500 hover:bg-gold-600 text-navy-800"
             >
               Browse Venues
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="btn-outline border-white text-white hover:bg-white/10"
             >
               Contact Us

@@ -11,7 +11,6 @@ import Home from "./pages/Venues";
 import HomeNew from "./pages/HomeNew";
 import HallProfile from "./pages/HallProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext";
 
 const Router = createBrowserRouter([
   {
@@ -33,11 +32,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/venues",
-        element: (
-          <ProtectedRoute allowedRoles={["manager"]}>
-            <Home />
-          </ProtectedRoute>
-        ),
+        element: <Home />,
       },
     ],
   },

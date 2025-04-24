@@ -55,6 +55,7 @@ const Login = () => {
         showAlert("Login successful!", "success"); // Use showAlert here
         navigate("/"); // Redirect to the home page after successful login
       } else {
+        console.log("Login failed:", res.data.error);
         showAlert(`${res.data.error}`, "failure"); // Use showAlert here
       }
     } catch (e) {
@@ -110,6 +111,7 @@ const Login = () => {
 
             <button
               type="submit"
+              disabled={isSubmitted}
               className="w-full rounded-full bg-pink-500 py-2 text-white hover:bg-pink-600 focus:outline-none"
             >
               {isSubmitted ? "Loading..." : "Login"}

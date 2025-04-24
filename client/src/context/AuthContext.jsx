@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       const storedUser = localStorage.getItem("user");
       if (storedUser) setUser(JSON.parse(storedUser));
       setLoading(false);
-    }, 2000); // Force a 2-second delay to confirm loader works
+    }, 100); // Force a 2-second delay to confirm loader works
   }, []);
 
   const login = (userData, token) => {

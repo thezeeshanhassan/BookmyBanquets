@@ -2,18 +2,25 @@ import { useState } from "react";
 import { FiMenu, FiX, FiUser, FiHeart } from "react-icons/fi";
 import { motion } from "framer-motion";
 import logo from "../../public/favicon.png";
+import { useAuth } from "../context/AuthContext"; // Ensure the path is correct}
+import { useNavigate } from "react-router-dom";
 const Header = ({ isScrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const { user, logout } = useAuth(); // Access the user from AuthContext
+  const isLoggedIn = !!user; // Check if the user is logged in
+  const navigate = useNavigate(); // Use the useNavigate hook
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Venues", href: "/venues" },
     { name: "Services", href: "#" },
     { name: "Locations", href: "#" },
-    { name: "About Us", href: "#" },
     { name: "Contact", href: "#" },
   ];
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
@@ -47,7 +54,7 @@ const Header = ({ isScrolled }) => {
           ))}
         </nav>
 
-        {/* User Actions */}
+        {/* Desktop Navigation - User Actions */}
         <div className="hidden md:flex items-center space-x-6">
           <a
             href="#favorites"
@@ -58,25 +65,43 @@ const Header = ({ isScrolled }) => {
             <FiHeart className="mr-1" />
             <span>Favorites</span>
           </a>
-          <a
-            href="/login"
-            className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${
-              isScrolled ? "text-navy-800" : "text-white"
-            }`}
-          >
-            <FiUser className="mr-1" />
-            <span>Login</span>
-          </a>
-          <a
-            href="/register"
-            className={`btn-primary ${
-              isScrolled
-                ? ""
-                : "bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
-            }`}
-          >
-            Sign Up
-          </a>
+
+          {!isLoggedIn && (
+            <>
+              <a
+                href="/login"
+                className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${
+                  isScrolled ? "text-navy-800" : "text-white"
+                }`}
+              >
+                <FiUser className="mr-1" />
+                <span>Login</span>
+              </a>
+              <a
+                href="/register"
+                className={`btn-primary ${
+                  isScrolled
+                    ? ""
+                    : "bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
+                }`}
+              >
+                Sign Up
+              </a>
+            </>
+          )}
+
+          {isLoggedIn && (
+            <button
+              onClick={handleLogout} // ✅ FIX: Call the function
+              className={`btn-primary ${
+                isScrolled
+                  ? ""
+                  : "bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
+              }`}
+            >
+              Log Out
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -143,19 +168,36 @@ const Header = ({ isScrolled }) => {
                   <FiHeart className="mr-2" />
                   <span>Favorites</span>
                 </a>
-                <a
-                  href="/login"
-                  className="flex items-center text-navy-800 text-lg font-medium hover:text-gold-500"
-                >
-                  <FiUser className="mr-2" />
-                  <span>Login</span>
-                </a>
-                <a
-                  href="/signup"
-                  className="btn-primary w-full justify-center flex items-center"
-                >
-                  Sign Upp
-                </a>
+
+                {!isLoggedIn && (
+                  <>
+                    <a
+                      href="/login"
+                      className="flex items-center text-navy-800 text-lg font-medium hover:text-gold-500"
+                    >
+                      <FiUser className="mr-2" />
+                      <span>Login</span>
+                    </a>
+                    <a
+                      href="/register"
+                      className="btn-primary w-full justify-center flex items-center"
+                    >
+                      Sign Up
+                    </a>
+                  </>
+                )}
+
+                {isLoggedIn && (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setMobileMenuOpen(false); // Close the mobile menu after logout
+                    }}
+                    className="btn-primary w-full justify-center flex items-center"
+                  >
+                    Logout
+                  </button>
+                )}
               </div>
             </nav>
           </motion.div>

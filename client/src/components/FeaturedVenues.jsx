@@ -179,7 +179,7 @@ const FeaturedVenues = () => {
                       <span className="text-gray-500 text-sm"> / day</span>
                     </div>
                     <a
-                      href={`#venue-${venue.id}`}
+                      href={`/hall/${venue.id}`}
                       className="btn-outline text-sm py-2"
                     >
                       View Details
