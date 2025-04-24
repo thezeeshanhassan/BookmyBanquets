@@ -2,30 +2,33 @@ import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-// Generic authentication middleware
-export const authenticateUser = (req, res, next) => {
+// Helper to extract and verify token
+const verifyToken = (req) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'No token provided' });
+    throw new Error('Token missing');
   }
-
   const token = authHeader.split(' ')[1];
+  return jwt.verify(token, process.env.JWT_SECRET);
+};
+
+// Generic authentication middleware
+export const authenticateUser = (req, res, next) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = verifyToken(req);
     req.user = decoded;
+    req.userId = decoded.userId;
+    req.role = decoded.role;
     next();
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Unauthorized or invalid token' });
   }
 };
 
-// Middleware to validate hall manager by fetching role from DB
+// Role-based middleware: Hall Manager
 export const authenticateHallManager = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ message: 'Token missing' });
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = verifyToken(req);
     const user = await prisma.user.findUnique({ where: { email: decoded.email } });
 
     if (!user || user.role !== 'manager') {
@@ -33,20 +36,19 @@ export const authenticateHallManager = async (req, res, next) => {
     }
 
     req.user = user;
+    req.userId = user.userId;
+    req.role = user.role;
     next();
   } catch (err) {
     console.error('Auth error:', err.message);
-    res.status(401).json({ message: 'Unauthorized or invalid token' });
+    return res.status(401).json({ message: 'Unauthorized or invalid token' });
   }
 };
 
-// Middleware for admin-only routes
+// Role-based middleware: Admin only
 export const authenticateAdmin = async (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ message: 'Token missing' });
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = verifyToken(req);
     const user = await prisma.user.findUnique({ where: { email: decoded.email } });
 
     if (!user || user.role !== 'admin') {
@@ -54,9 +56,32 @@ export const authenticateAdmin = async (req, res, next) => {
     }
 
     req.user = user;
+    req.userId = user.userId;
+    req.role = user.role;
     next();
   } catch (err) {
     console.error('Auth error:', err.message);
-    res.status(401).json({ message: 'Unauthorized or invalid token' });
+    return res.status(401).json({ message: 'Unauthorized or invalid token' });
   }
 };
+
+export const verifyHallOwnership = async (req, res, next) => {
+    try {
+      const hallId = req.params.id;
+      const hall = await prisma.hall.findUnique({ where: { hallId } });
+  
+      if (!hall) {
+        return res.status(404).json({ message: 'Hall not found' });
+      }
+  
+      if (hall.userId !== req.user.userId) {
+        return res.status(403).json({ message: 'Access denied: You do not own this hall' });
+      }
+  
+      // If passed
+      next();
+    } catch (err) {
+      console.error('Ownership check error:', err.message);
+      return res.status(500).json({ message: 'Error verifying hall ownership' });
+    }
+  };

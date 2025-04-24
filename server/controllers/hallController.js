@@ -20,7 +20,7 @@ export const createHall = async (req, res) => {
         }
       }
     });
-    res.status(201).json(hall);
+    res.status(200).json({ hall, message: "Hall Profile created successfully" });
   } catch (err) {
     res.status(500).json({ error: 'Error creating hall', details: err.message });
   }
@@ -28,27 +28,66 @@ export const createHall = async (req, res) => {
 
 export const updateHall = async (req, res) => {
   try {
+    const { imageURLs, amenities, ...rest } = req.body;
+
+    // Format the imageURLs
+    const formattedData = {
+      ...rest,
+      ...(imageURLs && { imageURLs: imageURLs.join(',') })
+    };
+
+    // TODO: Update amenities properly (optional step shown below)
+
     const updated = await prisma.hall.update({
       where: { hallId: req.params.id },
-      data: req.body
+      data: formattedData
     });
-    res.json(updated);
+
+    res.json({ status: 'success', data: updated, message: 'Hall updated successfully' });
   } catch (err) {
     res.status(400).json({ error: 'Hall update failed', details: err.message });
   }
 };
 
 export const deleteHall = async (req, res) => {
+  const hallId = req.params.id;
+
   try {
-    await prisma.hall.delete({ where: { hallId: req.params.id } });
-    res.json({ message: 'Hall deleted successfully' });
+    // Step 1: Check if there are any active bookings
+    const activeBooking = await prisma.booking.findFirst({
+      where: {
+        hallId,
+        status: { in: ['pending', 'approved'] } // You can define what "active" means
+      }
+    });
+
+    if (activeBooking) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Cannot delete this hall. It has active bookings.'
+      });
+    }
+
+    await prisma.amenitiesHall.deleteMany({ where: { hallId } });
+    await prisma.review.deleteMany({ where: { hallId } });
+    await prisma.booking.deleteMany({ where: { hallId } });
+    await prisma.hall.delete({ where: { hallId } });
+
+    res.json({
+      status: 'success',
+      message: 'Hall deleted successfully'
+    });
   } catch (err) {
-    res.status(404).json({ error: 'Hall not found', details: err.message });
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to delete hall',
+      details: err.message
+    });
   }
 };
 
 export const getAllHalls = async (req, res) => {
-    console.log("Hello")
+  console.log("Hello")
   try {
     const halls = await prisma.hall.findMany({
       include: {
@@ -125,17 +164,46 @@ export const searchHalls = async (req, res) => {
 export const checkAvailability = async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
+
+    // Validate date inputs
+    if (!startDate || !endDate) {
+      return res.status(400).json({
+        error: 'Missing startDate or endDate in query parameters'
+      });
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(start) || isNaN(end)) {
+      return res.status(400).json({
+        error: 'Invalid date format. Please provide valid ISO date strings.'
+      });
+    }
+
+    // Find bookings that overlap with the requested range
     const overlapping = await prisma.booking.findMany({
       where: {
         hallId: req.params.id,
         OR: [
-          { startDate: { lte: new Date(endDate) }, endDate: { gte: new Date(startDate) } }
+          {
+            startDate: { lte: end },
+            endDate: { gte: start }
+          }
         ]
       }
     });
-    res.json({ available: overlapping.length === 0 });
+
+    res.json({
+      available: overlapping.length === 0,
+      overlaps: overlapping.length,
+      bookings: overlapping
+    });
   } catch (err) {
-    res.status(500).json({ error: 'Availability check failed', details: err.message });
+    res.status(500).json({
+      error: 'Availability check failed',
+      details: err.message
+    });
   }
 };
 
@@ -151,17 +219,48 @@ export const getHallReviews = async (req, res) => {
 export const postReview = async (req, res) => {
   try {
     const { rating, comment } = req.body;
+    const hallId = req.params.id;
+    const userId = req.user.userId;
+
+    const hasBooking = await prisma.booking.findFirst({
+      where: {
+        userId,
+        hallId,
+        status: 'approved', 
+        endDate: {
+          lt: new Date() 
+        }
+      }
+    });
+
+    if (!hasBooking) {
+      return res.status(403).json({
+        status: 'fail',
+        message: 'You can only review halls you have booked in the past.'
+      });
+    }
+
     const review = await prisma.review.create({
       data: {
         rating,
         comment,
-        userId: req.user.userId,
-        hallId: req.params.id
+        hallId,
+        userId
       }
     });
-    res.status(201).json({review, message: "Review submitted successfully"});
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Review submitted successfully',
+      data: review
+    });
+
   } catch (err) {
-    res.status(500).json({ error: 'Failed to submit review', details: err.message });
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to submit review',
+      details: err.message
+    });
   }
 };
 
@@ -186,7 +285,7 @@ export const getTopRatedHalls = async (req, res) => {
 export const getOwnedHalls = async (req, res) => {
   try {
     const halls = await prisma.hall.findMany({
-      where: { userId: req.user.id },
+      where: { userId: req.user.userId },
       include: { reviews: true, amenities: { include: { amenity: true } } }
     });
     res.json(halls);
