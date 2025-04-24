@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import HomeLayout from "./layout/homeLayout";
 import Home from "./pages/Home";
+import Venue from "./pages/Vanue";
 
 const Router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const Router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
       },
 
       {
@@ -28,7 +29,11 @@ const Router = createBrowserRouter([
         element: <Login />,
       },
     ],
-  }
+  },
+  {
+    path: "/venue",
+    element: <Venue />,
+  },
 ]);
 
 function App() {
