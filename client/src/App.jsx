@@ -33,7 +33,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "/venues",
-        element: <Home />,
+        element: (
+          <ProtectedRoute allowedRoles={["manager"]}>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -9,7 +9,7 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext"; // Ensure the path is correct
 import { AlertContext } from "../context/AlertContext"; // Ensure the path is correct
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -19,8 +19,9 @@ const Login = () => {
     password: "",
     userType: "customer",
   });
-  const { login } = useAuth(); 
+  const { login } = useAuth();
   const { showAlert } = useContext(AlertContext); // Access the AlertContext
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -52,7 +53,7 @@ const Login = () => {
         console.log("Login successful:", res.data);
         login(res.data.user, res.data.token);
         showAlert("Login successful!", "success"); // Use showAlert here
-        Navigate("/");
+        navigate("/"); // Redirect to the home page after successful login
       } else {
         showAlert(`${res.data.error}`, "failure"); // Use showAlert here
       }
