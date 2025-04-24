@@ -93,7 +93,7 @@ const Hero = () => {
 
             <button
               type="submit"
-              className="w-full bg-gold-500 hover:bg-gold-600 text-navy-800 font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center"
+              className="w-full btn-primary  font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center"
             >
               <FiSearch className="mr-2" />
               Search
@@ -108,20 +108,20 @@ const Hero = () => {
           className="mt-12 flex flex-wrap justify-center gap-6"
         >
           <div className="flex items-center">
-            <span className="bg-gold-500 p-2 rounded-full">
-              <FiMapPin className="h-5 w-5 text-navy-800" />
+            <span className="bg-[#FF477E] p-2 rounded-full">
+              <FiMapPin className="h-5 w-5  text-white" />
             </span>
             <span className="ml-2">500+ Venues</span>
           </div>
           <div className="flex items-center">
-            <span className="bg-gold-500 p-2 rounded-full">
-              <FiUsers className="h-5 w-5 text-navy-800" />
+            <span className="bg-[#FF477E] p-2 rounded-full">
+              <FiUsers className="h-5 w-5  text-white" />
             </span>
             <span className="ml-2">10,000+ Happy Customers</span>
           </div>
           <div className="flex items-center">
-            <span className="bg-gold-500 p-2 rounded-full">
-              <FiCalendar className="h-5 w-5 text-navy-800" />
+            <span className="bg-[#FF477E] p-2 rounded-full">
+              <FiCalendar className="h-5 w-5    text-white" />
             </span>
             <span className="ml-2">Instant Booking</span>
           </div>

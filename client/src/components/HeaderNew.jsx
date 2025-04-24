@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { FiMenu, FiX, FiUser, FiHeart } from "react-icons/fi";
 import { motion } from "framer-motion";
-
+import logo from "../../public/favicon.png";
 const Header = ({ isScrolled }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "Venues", href: "#venues" },
-    { name: "Services", href: "#services" },
-    { name: "Locations", href: "#locations" },
-    { name: "About Us", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "Venues", href: "/venues" },
+    { name: "Services", href: "#" },
+    { name: "Locations", href: "#" },
+    { name: "About Us", href: "#" },
+    { name: "Contact", href: "#" },
   ];
 
   return (
@@ -25,7 +25,7 @@ const Header = ({ isScrolled }) => {
         <div className="flex items-center">
           <a href="/" className="flex items-center">
             <img
-              src={"https://via.placeholder.com/150x50"}
+              src={logo || "https://via.placeholder.com/150x50"}
               alt="BookMyBanquets"
               className="h-10"
             />
@@ -38,7 +38,7 @@ const Header = ({ isScrolled }) => {
             <a
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-gold-500 ${
+              className={`text-sm  font-medium transition-colors hover:text-gold-500 ${
                 isScrolled ? "text-navy-800" : "text-white"
               }`}
             >
@@ -144,14 +144,14 @@ const Header = ({ isScrolled }) => {
                   <span>Favorites</span>
                 </a>
                 <a
-                  href="#login"
+                  href="/login"
                   className="flex items-center text-navy-800 text-lg font-medium hover:text-gold-500"
                 >
                   <FiUser className="mr-2" />
                   <span>Login</span>
                 </a>
                 <a
-                  href="#signup"
+                  href="/signup"
                   className="btn-primary w-full justify-center flex items-center"
                 >
                   Sign Up
