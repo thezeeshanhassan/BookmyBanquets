@@ -108,11 +108,20 @@ const Login = () => {
               setShowPassword={setShowPassword}
               isPassword={true}
             />
+            {/* Forgot Password Link */}
+            <div className="mb-4 mt-2 text-right">
+              <a
+                href="/forgot-password" // You can change this to use
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Forgot Password?
+              </a>
+            </div>
 
             <button
               type="submit"
               disabled={isSubmitted}
-              className="w-full rounded-full bg-pink-500 py-2 text-white hover:bg-pink-600 focus:outline-none"
+              className="w-full rounded-lg bg-pink-500 py-2 text-white hover:bg-pink-600 focus:outline-none"
             >
               {isSubmitted ? "Loading..." : "Login"}
             </button>

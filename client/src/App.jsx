@@ -11,6 +11,12 @@ import Home from "./pages/Venues";
 import HomeNew from "./pages/HomeNew";
 import HallProfile from "./pages/HallProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./pages/ForgotPassword";
+import ManagerDashboard from "./pages/ManagerDashboard";
+import HallCustomerDashboard from "./pages/HallCustomerDashboard";
+import Contact from "./pages/contact";
+import Services from "./pages/services";
+import Locations from "./pages/Locations";
 
 const Router = createBrowserRouter([
   {
@@ -34,6 +40,30 @@ const Router = createBrowserRouter([
         path: "/venues",
         element: <Home />,
       },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />
+      },
+      {
+        path: "/manager-dashboard",
+        element: <ManagerDashboard />
+      },
+      {
+        path: "/customer-dashboard",
+        element: <HallCustomerDashboard />
+      },
+      {
+        path: "/contact",
+        element: <Contact />
+      },
+      {
+        path: "/services",
+        element: <Services />
+      },
+      {
+        path: "/locations",
+        element: <Locations/>
+      }
     ],
   },
   {

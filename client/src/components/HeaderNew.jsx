@@ -12,10 +12,16 @@ const Header = ({ isScrolled }) => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Venues", href: "/venues" },
-    { name: "Services", href: "#" },
-    { name: "Locations", href: "#" },
-    { name: "Contact", href: "#" },
+    { name: "Services", href: "/services" },
+    { name: "Locations", href: "/locations" },
+    { name: "Contact", href: "/contact" },
   ];
+  if (isLoggedIn) {
+    navLinks.push({
+      name: "Dashboard",
+      href: user.role === "manager" ? "/manager-dashboard" : "/customer-dashboard",
+    });
+  }
 
   const handleLogout = () => {
     logout();
@@ -23,9 +29,8 @@ const Header = ({ isScrolled }) => {
   };
   return (
     <header
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"
-      }`}
+      className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"
+        }`}
     >
       <div className="container-custom flex items-center justify-between">
         {/* Logo */}
@@ -45,9 +50,8 @@ const Header = ({ isScrolled }) => {
             <a
               key={link.name}
               href={link.href}
-              className={`text-sm  font-medium transition-colors hover:text-gold-500 ${
-                isScrolled ? "text-navy-800" : "text-white"
-              }`}
+              className={`text-sm  font-medium transition-colors hover:text-gold-500 ${isScrolled ? "text-navy-800" : "text-white"
+                }`}
             >
               {link.name}
             </a>
@@ -58,9 +62,8 @@ const Header = ({ isScrolled }) => {
         <div className="hidden md:flex items-center space-x-6">
           <a
             href="#favorites"
-            className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${
-              isScrolled ? "text-navy-800" : "text-white"
-            }`}
+            className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${isScrolled ? "text-navy-800" : "text-white"
+              }`}
           >
             <FiHeart className="mr-1" />
             <span>Favorites</span>
@@ -70,20 +73,18 @@ const Header = ({ isScrolled }) => {
             <>
               <a
                 href="/login"
-                className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${
-                  isScrolled ? "text-navy-800" : "text-white"
-                }`}
+                className={`flex items-center text-sm font-medium transition-colors hover:text-gold-500 ${isScrolled ? "text-navy-800" : "text-white"
+                  }`}
               >
                 <FiUser className="mr-1" />
                 <span>Login</span>
               </a>
               <a
                 href="/register"
-                className={`btn-primary ${
-                  isScrolled
+                className={`btn-primary ${isScrolled
                     ? ""
                     : "bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
-                }`}
+                  }`}
               >
                 Sign Up
               </a>
@@ -93,11 +94,10 @@ const Header = ({ isScrolled }) => {
           {isLoggedIn && (
             <button
               onClick={handleLogout} // ✅ FIX: Call the function
-              className={`btn-primary ${
-                isScrolled
+              className={`btn-primary ${isScrolled
                   ? ""
                   : "bg-white/10 backdrop-blur-md text-white hover:bg-white/20"
-              }`}
+                }`}
             >
               Log Out
             </button>
@@ -108,9 +108,8 @@ const Header = ({ isScrolled }) => {
         <div className="md:hidden">
           <button
             type="button"
-            className={`p-2 rounded-md ${
-              isScrolled ? "text-navy-800" : "text-white"
-            }`}
+            className={`p-2 rounded-md ${isScrolled ? "text-navy-800" : "text-white"
+              }`}
             onClick={() => setMobileMenuOpen(true)}
           >
             <FiMenu className="h-6 w-6" />

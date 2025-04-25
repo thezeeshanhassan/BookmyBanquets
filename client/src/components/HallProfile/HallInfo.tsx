@@ -12,7 +12,7 @@ const HallInfo: React.FC = () => {
       min: 100,
       max: 500,
     },
-    address: "123 Elegance Way, Luxury District, City Name",
+    address: "123 Barkat Market, Lahore District, Lahore",
     timings: "10:00 AM - 11:00 PM",
     priceRange: "₹₹₹₹",
     quickStats: [

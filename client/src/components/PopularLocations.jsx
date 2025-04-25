@@ -4,47 +4,48 @@ const PopularLocations = () => {
   const locations = [
     {
       id: 1,
-      name: "New York",
+      name: "Lahore",
       image:
         "https://images.pexels.com/photos/2190283/pexels-photo-2190283.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      venueCount: 120,
+      venueCount: 185,
     },
     {
       id: 2,
-      name: "Los Angeles",
+      name: "Karachi",
       image:
         "https://images.pexels.com/photos/1388030/pexels-photo-1388030.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      venueCount: 98,
+      venueCount: 160,
     },
     {
       id: 3,
-      name: "Chicago",
+      name: "Islamabad",
       image:
         "https://images.pexels.com/photos/2132180/pexels-photo-2132180.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      venueCount: 75,
+      venueCount: 110,
     },
     {
       id: 4,
-      name: "Miami",
+      name: "Rawalpindi",
       image:
         "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      venueCount: 62,
+      venueCount: 95,
     },
     {
       id: 5,
-      name: "Las Vegas",
+      name: "Multan",
       image:
         "https://images.pexels.com/photos/415999/pexels-photo-415999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      venueCount: 55,
+      venueCount: 82,
     },
     {
       id: 6,
-      name: "San Francisco",
+      name: "Faisalabad",
       image:
         "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      venueCount: 48,
+      venueCount: 74,
     },
   ];
+  
 
   return (
     <section id="locations" className="py-20 bg-gray-50">

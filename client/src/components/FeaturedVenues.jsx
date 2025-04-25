@@ -18,10 +18,10 @@ const FeaturedVenues = () => {
     {
       id: 1,
       name: "The Grand Ballroom",
-      location: "Manhattan, New York",
+      location: "Lahore",
       image:
         "https://images.pexels.com/photos/3201763/pexels-photo-3201763.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "$5,000",
+      price: "PKR 5,000",
       capacity: "300-500 guests",
       rating: 4.9,
       reviewCount: 124,
@@ -30,10 +30,10 @@ const FeaturedVenues = () => {
     {
       id: 2,
       name: "Royal Gardens",
-      location: "Beverly Hills, CA",
+      location: "Lahore",
       image:
         "https://images.pexels.com/photos/2291462/pexels-photo-2291462.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "$4,500",
+      price: "PKR 4,500",
       capacity: "200-350 guests",
       rating: 4.8,
       reviewCount: 98,
@@ -42,10 +42,10 @@ const FeaturedVenues = () => {
     {
       id: 3,
       name: "Oceanview Terrace",
-      location: "Miami Beach, FL",
+      location: "Rawalpindi",
       image:
         "https://images.pexels.com/photos/1616113/pexels-photo-1616113.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "$6,200",
+      price: "PKR 6,200",
       capacity: "100-250 guests",
       rating: 4.7,
       reviewCount: 86,
@@ -54,10 +54,10 @@ const FeaturedVenues = () => {
     {
       id: 4,
       name: "The Majestic",
-      location: "Chicago, IL",
+      location: "Karachi",
       image:
         "https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "$3,800",
+      price: "PKR 3,800",
       capacity: "150-300 guests",
       rating: 4.6,
       reviewCount: 74,
@@ -66,10 +66,10 @@ const FeaturedVenues = () => {
     {
       id: 5,
       name: "Crystal Palace",
-      location: "Las Vegas, NV",
+      location: "Lahore",
       image:
         "https://images.pexels.com/photos/3038424/pexels-photo-3038424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "$7,500",
+      price: "PKR 7,500",
       capacity: "400-800 guests",
       rating: 4.9,
       reviewCount: 156,
@@ -192,7 +192,7 @@ const FeaturedVenues = () => {
         </Slider>
 
         <div className="text-center mt-12">
-          <a href="#all-venues" className="btn-primary">
+          <a href="venues" className="btn-primary">
             View All Venues
           </a>
         </div>
