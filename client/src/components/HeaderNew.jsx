@@ -12,9 +12,9 @@ const Header = ({ isScrolled }) => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Venues", href: "/venues" },
-    { name: "Services", href: "#" },
-    { name: "Locations", href: "#" },
-    { name: "Contact", href: "#" },
+    { name: "Services", href: "/services" },
+    { name: "Locations", href: "/locations" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const handleLogout = () => {

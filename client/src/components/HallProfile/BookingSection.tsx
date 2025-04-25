@@ -27,7 +27,7 @@ const packageOptions = [
   {
     id: "basic",
     name: "Essential Package",
-    price: "₹125,000",
+    price: " PKR125,000",
     features: [
       "Hall rental for 4 hours",
       "Basic decor setup",
@@ -40,7 +40,7 @@ const packageOptions = [
   {
     id: "premium",
     name: "Premium Package",
-    price: "₹225,000",
+    price: "PKR 225,000",
     features: [
       "Hall rental for 6 hours",
       "Premium decor with floral arrangements",
@@ -54,7 +54,7 @@ const packageOptions = [
   {
     id: "luxury",
     name: "Royal Package",
-    price: "₹350,000",
+    price: "PKR 350,000",
     features: [
       "Hall rental for 8 hours",
       "Luxury decor with premium flowers",
