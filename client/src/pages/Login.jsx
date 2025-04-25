@@ -121,7 +121,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isSubmitted}
-              className="w-full rounded-full bg-pink-500 py-2 text-white hover:bg-pink-600 focus:outline-none"
+              className="w-full rounded-lg bg-pink-500 py-2 text-white hover:bg-pink-600 focus:outline-none"
             >
               {isSubmitted ? "Loading..." : "Login"}
             </button>

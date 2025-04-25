@@ -14,7 +14,7 @@ const InputField = ({ type, id, name, value, onChange, placeholder, required, sh
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className="w-full rounded-full border border-gray-300 px-4 py-2 text-sm focus:border-pink-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-pink-500 focus:outline-none"
             required={required}
           />
           {isPassword && (

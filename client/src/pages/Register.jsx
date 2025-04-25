@@ -126,7 +126,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={isSubmitted}
-              className={`w-full rounded-full  py-2 text-white  focus:outline-none ${
+              className={`w-full rounded-lg  py-2 text-white  focus:outline-none ${
                 isSubmitted ? "bg-gray-400" : "bg-pink-500 hover:bg-pink-600"
               }`}
             >
