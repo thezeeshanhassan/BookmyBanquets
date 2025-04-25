@@ -108,6 +108,15 @@ const Login = () => {
               setShowPassword={setShowPassword}
               isPassword={true}
             />
+            {/* Forgot Password Link */}
+            <div className="mb-4 mt-2 text-right">
+              <a
+                href="/forgot-password" // You can change this to use
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Forgot Password?
+              </a>
+            </div>
 
             <button
               type="submit"

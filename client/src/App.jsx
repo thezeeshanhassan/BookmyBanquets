@@ -11,6 +11,7 @@ import Home from "./pages/Venues";
 import HomeNew from "./pages/HomeNew";
 import HallProfile from "./pages/HallProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const Router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const Router = createBrowserRouter([
         path: "/venues",
         element: <Home />,
       },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />
+      }
     ],
   },
   {
