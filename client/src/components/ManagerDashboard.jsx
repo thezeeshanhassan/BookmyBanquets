@@ -360,7 +360,7 @@ const Dashboard = () => {
       <main className="flex-1 p-6">
         {activeTab === "dashboard" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Overview</h2>
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Dashboard Overview</h2>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -436,7 +436,7 @@ const Dashboard = () => {
             {/* Recent Bookings */}
             <div className="bg-white rounded-lg shadow">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-800">Recent Bookings</h3>
+                <h3 className="text-lg font-medium text-gray-800 text-center">Recent Bookings</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -620,7 +620,7 @@ const Dashboard = () => {
         {activeTab === "bookings" && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Manage Bookings</h2>
+              <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Manage Bookings</h2>
               <div className="flex items-center space-x-4">
                 <div className="relative">
                   <select
@@ -743,7 +743,7 @@ const Dashboard = () => {
 
         {activeTab === "calendar" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Event Calendar</h2>
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Event Calendar</h2>
             <div className="bg-white rounded-lg shadow p-6">
               <div className="text-center mb-6">
                 <h3 className="text-lg font-medium text-gray-800">June 2025</h3>
@@ -802,7 +802,7 @@ const Dashboard = () => {
 
         {activeTab === "analytics" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Analytics & Reports</h2>
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Analytics & Reports</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white rounded-lg shadow p-6">
@@ -950,11 +950,11 @@ const Dashboard = () => {
 
         {activeTab === "settings" && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Hall Settings</h2>
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Hall Settings</h2>
 
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-800">Hall Information</h3>
+                <h3 className="text-lg font-medium text-gray-800 text-center">Hall Information</h3>
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1053,7 +1053,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="mt-8 border-t border-gray-200 pt-6">
-                  <h4 className="text-lg font-medium text-gray-800 mb-4">Hall Amenities</h4>
+                  <h4 className="text-lg font-medium text-gray-800 mb-4 text-center">Hall Amenities</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {amenitiesList.map((amenity) => (
                       <div key={amenity.id} className="flex items-start space-x-2">
@@ -1074,7 +1074,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className="mt-8 border-t border-gray-200 pt-6">
-                  <h4 className="text-lg font-medium text-gray-800 mb-4">Hall Images</h4>
+                  <h4 className="text-lg font-medium text-gray-800 mb-4 text-center">Hall Images</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {hallImages.map((image, index) => (
                       <div key={index} className="relative group">
@@ -1109,7 +1109,7 @@ const Dashboard = () => {
                       </div>
                     )}
                   </div>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs text-gray-500 mt-2 text-center">
                     Upload up to 5 images of your hall. Recommended size: 1200x800 pixels.
                   </p>
                 </div>
@@ -1124,12 +1124,12 @@ const Dashboard = () => {
 
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-800">Package Settings</h3>
+                <h3 className="text-lg font-medium text-gray-800 text-center">Package Settings</h3>
               </div>
               <div className="p-6">
                 {packageOptions.map((pkg, index) => (
                   <div key={pkg.id} className="mb-8 border rounded-lg p-4">
-                    <h4 className="text-xl font-medium text-gray-800 mb-3">{pkg.name}</h4>
+                    <h4 className="text-xl font-medium text-gray-800 mb-3 text-center">{pkg.name}</h4>
                     <div className="mb-3">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
                       <input
@@ -1326,5 +1326,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
-
